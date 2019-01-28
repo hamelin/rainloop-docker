@@ -23,4 +23,11 @@ RUN ln -s /usr/bin/php5 /usr/bin/php
 
 RUN curl -sL https://repository.rainloop.net/installer.php | php
 
-CMD ["/bin/sh"]
+RUN addgroup -S www && adduser -G www -S www
+RUN mkdir /www && chown -R www:www /www
+RUN chown -R www:www /var/lib/nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --chown=www:www index.html /www/index.html
+EXPOSE 80
+
+CMD ["/bin/sh", "-c", "nginx && tail -f /var/log/nginx/*"]
