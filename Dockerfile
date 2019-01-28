@@ -30,4 +30,10 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY --chown=www:www index.html /www/index.html
 EXPOSE 80
 
-CMD ["/bin/sh", "-c", "nginx && tail -f /var/log/nginx/*"]
+COPY php5_env.sh /etc/profile.d
+RUN chmod 755 /etc/profile.d/*
+COPY reconfig_php5.sh /
+RUN sh /reconfig_php5.sh && rm /reconfig_php5.sh
+COPY --chown=www:www phpinfo.php /www
+
+CMD ["/bin/sh", "-c", "nginx && php-fpm5 && tail -f /var/log/nginx/access.log /var/log/nginx/error.log /var/log/php-fpm.log"]
