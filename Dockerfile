@@ -19,7 +19,6 @@ RUN apk add curl \
     php5-gettext \
     php5-bz2 \
     php5-ctype
-#RUN ln -s /usr/bin/php5 /usr/bin/php
 
 RUN addgroup -S www && adduser -G www -S www
 RUN mkdir /www && chown -R www:www /www
@@ -42,4 +41,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY --chown=www:www index.html /www/index.html
 EXPOSE 80
 
-CMD ["/bin/sh", "-c", "nginx && php-fpm5 && tail -f /var/log/nginx/access.log /var/log/nginx/error.log /var/log/php-fpm.log"]
+CMD ["/bin/sh", "-c", "chown -R www:www /www/rainloop/data && nginx && php-fpm5 && tail -f /var/log/nginx/access.log /var/log/nginx/error.log /var/log/php-fpm.log"]
