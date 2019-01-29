@@ -8,4 +8,9 @@ to set up an Alpine Docker with working PHP5 over nginx; Rainloop is installed
 as is on top, in `/www/rainloop`. The Rainloop webapp is delivered over
 FastCGI listening on port 9000. The nginx server listens on port 80.
 
-This image is plug-and-play -- no customization needed.
+This image is plug-and-play -- no customization needed. The following paths
+are available once the image is launched:
+
+- `/rainloop` -- The Rainloop webapp.
+- `/index.html` -- Sanity test for nginx service.
+- `/phpinfo.php` -- Sanity test for PHP (over FastCGI).
